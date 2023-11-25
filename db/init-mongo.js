@@ -10,7 +10,7 @@ db.createCollection('users');
 db.users.insert([
   {
      name: 'Jon',
-     email: 'jon@gmail.com',
+     email: 'j@gmail.com',
      pwd: '1234',
    } 
  ]);
