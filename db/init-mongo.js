@@ -1,5 +1,11 @@
 const db = db.getSiblingDB('exampleDB');
-
+db.createUser(
+  {
+    user: 'root',
+    pwd: 'example',
+    roles: [{ role: 'readWrite', db: 'exampleDB' }],
+  },
+);
 db.createCollection('users');
 db.users.insert([
   {
@@ -10,4 +16,4 @@ db.users.insert([
  ]);
 
 
-db.createCollection('banks');
+db.createCollection('exampleCollection');

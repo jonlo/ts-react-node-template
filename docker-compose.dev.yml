@@ -4,12 +4,13 @@ services:
     container_name: mongo
     image: mongo:latest
     ports:
-      - "27019:27017"
+      - "27018:27017"
     expose:
-      - "27019"
+      - "27018"
     environment:
       MONGO_INITDB_DATABASE: exampleDB
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./db/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./db/db-data:/data/db
