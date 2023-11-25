@@ -57,7 +57,7 @@ As backend and frontend are both dockerized, you can deploy then in any docker c
 A docker compose file is provided to run the project in production mode, you need to run the following commands:
 
 ```bash
-docker-compose up --build
+docker-compose -f docker-compose.prod.yml up -d --build
 ```
 
 This should build the images and run the containers, the frontend will be available at http://localhost and the backend will be available at http://localhost/backend.
