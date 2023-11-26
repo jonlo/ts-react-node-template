@@ -1,12 +1,14 @@
-import { Router, Request, Response } from 'express';
-import Debug from "debug";
-const debug = Debug("Example:examples");
-const router = Router();
 
-router.get('/status', (req: Request, res: Response) => {
-    debug("status");
-    res.status(200).send();
+import express, { Request, Response } from 'express';
+
+const examples = express();
+
+examples.post('/example', async (req: Request, res: Response) => {
+    try {
+        res.status(200).send();
+    } catch (err) {
+        res.status(400).send();
+    }
 });
 
-
-export default router;
+export { examples };

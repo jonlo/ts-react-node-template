@@ -1,4 +1,4 @@
-import server from '../index';
+import server from '../index2';
 import { describe, it, expect, afterAll } from 'vitest';
 import supertest from 'supertest';
 
