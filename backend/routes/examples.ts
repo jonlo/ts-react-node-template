@@ -1,10 +1,12 @@
 
 import express, { Request, Response } from 'express';
-
+import Debug from "debug";
+const debug = Debug("Example:examples");
 const examples = express();
 
-examples.post('/example', async (req: Request, res: Response) => {
+examples.get('/example', async (req: Request, res: Response) => {
     try {
+        debug('⚡️ Get example');
         res.status(200).send();
     } catch (err) {
         res.status(400).send();

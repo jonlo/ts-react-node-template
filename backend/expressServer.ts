@@ -3,7 +3,7 @@ import { Application, } from 'express'
 import { routes } from './routes/index';
 import {Server} from 'node:http';
 import Debug from "debug";
-const debug = Debug("*");
+const debug = Debug("Example:server");
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const morgan = require('morgan');
