@@ -9,8 +9,8 @@ export class ExamplesRepository implements IRepository<Example> {
 
 	async getAll(filter: Object): Promise<Example[]> {
 		try {
-			const examples = await ExampleModel.find(filter) as Example[];
-			return examples;
+			const models = await ExampleModel.find(filter);
+			return models;
 		} catch (err) {
 			debug(err);
 			return [];
@@ -33,10 +33,10 @@ export class ExamplesRepository implements IRepository<Example> {
 
 	async create(data: Example): Promise<Example | null> {
 		try {
-			const exampleModel = new ExampleModel(data);
-			const example = await exampleModel.save() as Example;
-			debug('snip:created snip ' + example.name);
-			return example;
+			const modelSchema = new ExampleModel(data);
+			const model = await modelSchema.save();
+			debug('create ' + (data as any)["constructor"].name);
+			return model;
 		} catch (err) {
 			debug(err);
 			return null;

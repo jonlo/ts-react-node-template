@@ -1,17 +1,16 @@
 import { IRepository } from '../repositories/IRepository';
-import { Example } from '../models/example/example';
 import Debug from "debug";
 const debug = Debug("Example:exampleController");
 
-export class ExampleController {
-    repository: IRepository<Example>;
+export class CrudController<T> {
+    repository: IRepository<T>;
 
-    constructor(repository: IRepository<Example>) {
+    constructor(repository: IRepository<T>) {
         this.repository = repository;
     }
 
-    async getAll(filter: Object) {
-        debug('get All examples');
+    async getAll(filter?: Object) {
+        debug('get All');
         return await this.repository.getAll(filter);
     }
 
@@ -20,18 +19,18 @@ export class ExampleController {
         return await this.repository.getById(id);
     }
 
-    async create(example: Example) {
-        debug('create example' + example.id);
-        return await this.repository.create(example);
+    async create(data: T) {
+        debug('create' + data);
+        return await this.repository.create(data);
     }
 
-    async update(id: string, example: Example) {
-        debug('update example' + id);
-        return await this.repository.update(example);
+    async update(id: string, data: T) {
+        debug('update' + id);
+        return await this.repository.update(data);
     }
 
     async delete(id: string) {
-        debug('delete example' + id);
+        debug('delete' + id);
         return await this.repository.delete(id);
     }
 
