@@ -2,6 +2,7 @@ import { IRepository } from "../../repositories/IRepository";
 import { ExampleModel } from "../schemas/exampleSchema";
 import { Example } from "../../../models/example/example";
 import Debug from "debug";
+import { as } from "vitest/dist/reporters-5f784f42";
 
 const debug = Debug("Example:ExamplesRepository");
 const error = Debug("Example:error");
@@ -36,9 +37,13 @@ export class ExamplesRepository implements IRepository<Example> {
 		try {
 			const modelSchema = new ExampleModel(data);
 			const model = await modelSchema.save();
-			model.dbId = model._id;
-			debug('create example'+ model.name);
-			return model;
+			const example: Example = {
+				dbId: model.id,
+				name: model.name,
+				description: model.description
+			};
+			debug('create example' + example.name);
+			return example;
 		} catch (err) {
 			error(err);
 			return null;
@@ -48,13 +53,21 @@ export class ExamplesRepository implements IRepository<Example> {
 	async update(data: Example): Promise<Example | null> {
 		try {
 			const filter = { _id: data.dbId };
-			const example = await ExampleModel.findOneAndUpdate(filter, data, {
+			const model = await ExampleModel.findOneAndUpdate(filter, data, {
 				new: true
-			}) as Example;
-			if (example) {
-				debug('update example ' + example.name);
+			});
+			if (model) {
+				const example: Example = {
+					dbId: model.id,
+					name: model.name,
+					description: model.description
+				};
+				if (example) {
+					debug('update example ' + example.name);
+				}
+				return example;
 			}
-			return example;
+			return null;
 		} catch (err) {
 			error(err);
 			return null;
