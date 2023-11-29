@@ -7,6 +7,16 @@ const error = Debug("Example:error");
 
 const examples = express();
 
+examples.get('/status', async (req: Request, res: Response) => {
+    try {
+        debug('tatus');
+        res.status(200).send();
+    } catch (err) {
+        error(err);
+        res.status(400).send();
+    }
+});
+
 examples.get('/example', async (req: Request, res: Response) => {
     try {
         debug('⚡️ Get example');

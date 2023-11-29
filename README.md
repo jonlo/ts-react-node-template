@@ -1,6 +1,6 @@
 # Ts react node template
 
-This is a template for a fullstack project using typescript, react and node.js (with express) and a mongoDB database.
+This is a template for a fullstack project using typescript, react, node.js (with express) and a mongoDB database.
 Vitest is used as a test runner for both the frontend and the backend. React testing library is available for the frontend.
 
 The tooling used in this project is listed at the end of this document. [here](#tooling)
