@@ -24,8 +24,8 @@ export class CrudController<T> {
         return await this.repository.create(data);
     }
 
-    async update(id: string, data: T) {
-        debug('update' + id);
+    async update( data: T) {
+        debug('update ' + data);
         return await this.repository.update(data);
     }
 

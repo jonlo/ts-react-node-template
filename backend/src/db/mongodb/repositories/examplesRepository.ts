@@ -2,7 +2,6 @@ import { IRepository } from "../../repositories/IRepository";
 import { ExampleModel } from "../schemas/exampleSchema";
 import { Example } from "../../../models/example/example";
 import Debug from "debug";
-import { as } from "vitest/dist/reporters-5f784f42";
 
 const debug = Debug("Example:ExamplesRepository");
 const error = Debug("Example:error");
@@ -62,9 +61,7 @@ export class ExamplesRepository implements IRepository<Example> {
 					name: model.name,
 					description: model.description
 				};
-				if (example) {
-					debug('update example ' + example.name);
-				}
+				debug('update example ' + example.name);
 				return example;
 			}
 			return null;
@@ -77,11 +74,18 @@ export class ExamplesRepository implements IRepository<Example> {
 	async delete(id: string): Promise<Example | null> {
 		try {
 			const filter = { _id: id };
-			const example = await ExampleModel.findOneAndDelete(filter) as Example;
-			if (example) {
+			const model = await ExampleModel.findOneAndDelete(filter);
+			if (model) {
+				const example: Example = {
+					dbId: model.id,
+					name: model.name,
+					description: model.description
+				};
 				debug('delete example ' + example.name);
+				return example;
 			}
-			return example;
+			return null;
+
 		} catch (err) {
 			error(`example:${err}`);
 			return null;
