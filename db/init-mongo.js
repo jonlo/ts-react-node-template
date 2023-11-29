@@ -16,4 +16,4 @@ db.users.insert([
  ]);
 
 
-db.createCollection('exampleCollection');
+db.createCollection('Example');
