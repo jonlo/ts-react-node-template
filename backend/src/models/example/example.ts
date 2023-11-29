@@ -1,6 +1,6 @@
 
 export interface Example{
-    id?: string;
+    dbId?: string;
     name: string;
     description: string;
 }

@@ -1,9 +1,8 @@
 import { Schema, Document, model } from 'mongoose';
+import { Example } from '../../../models/example/example';
 
-export interface ExampleSchema extends Document {
-	name: string;
-	description: string;
-}
+
+export interface ExampleSchema extends Example, Document {}
 
 export const exampleSchema = new Schema({
 	name: {

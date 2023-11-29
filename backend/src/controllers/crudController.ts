@@ -1,4 +1,4 @@
-import { IRepository } from '../repositories/IRepository';
+import { IRepository } from '../db/repositories/IRepository';
 import Debug from "debug";
 const debug = Debug("Example:exampleController");
 

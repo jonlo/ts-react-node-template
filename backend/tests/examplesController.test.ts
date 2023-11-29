@@ -1,11 +1,11 @@
 import { beforeAll, afterEach, describe, it, expect, afterAll } from 'vitest';
 import * as dbHandler from './db-handler';
 import { CrudController } from '../src/controllers/crudController';
-import { ExamplesRepository } from '../src/repositories/examplesRepository';
+import { ExamplesRepository } from '../src/db/mongodb/repositories/examplesRepository';
 import { Example } from '../src/models/example/example';
 
 
-beforeAll(async () => await dbHandler.connect().then(() => dbHandler.populateDatabase()));
+beforeAll(async () => await dbHandler.connect());
 afterEach(async () => await dbHandler.clearDatabase());
 afterAll(async () => await dbHandler.closeDatabase());
 
@@ -50,7 +50,7 @@ describe('Examples controller', () => {
     }
     const exampleDB = await examplesController.create(example1);
     await examplesController.create(example2);
-    await examplesController.delete(exampleDB?.id as string);
+    await examplesController.delete(exampleDB?.dbId as string);
     const examples = await examplesController.getAll();
     expect(examples.length).toEqual(1);
   });
