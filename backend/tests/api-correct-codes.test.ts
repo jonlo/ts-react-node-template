@@ -1,18 +1,16 @@
-import dotenv from 'dotenv';
-dotenv.config();
-import { ExpressServer } from '../src/expressServer';
-import express from 'express';
+import { beforeAll, afterEach, afterAll, describe, it, expect, beforeEach } from 'vitest';
 import * as dbHandler from './db-handler';
 import supertest from 'supertest';
-import { beforeAll, afterEach, afterAll, describe, it, expect, beforeEach } from 'vitest';
+import { requestWithSupertest } from './test-server';
 import { Example } from '../src/models/example/example';
 
-const expressServer = new ExpressServer(express(), process.env.PORT ?? '8000');
 let postExampleRes: supertest.Response;
 
 beforeAll(async () => await dbHandler.connect());
 afterEach(async () => await dbHandler.clearDatabase());
-afterAll(async () => await dbHandler.closeDatabase());
+afterAll(async () => {
+    await dbHandler.closeDatabase();
+});
 beforeEach(async () => {
     const exampleData: Example = {
         name: 'test',
@@ -21,9 +19,7 @@ beforeEach(async () => {
     postExampleRes = await requestWithSupertest.post('/example').send(exampleData).set('Accept', 'application/json');
 });
 
-const requestWithSupertest = supertest(expressServer.getServer());
-
-describe('examples api tests', () => {
+describe('API correct http codes', () => {
     it('get /examples 200', async () => {
         const getExamplesRes = await requestWithSupertest.get('/examples').set('Accept', 'application/json');
         expect(postExampleRes.status).toEqual(200);
@@ -34,16 +30,6 @@ describe('examples api tests', () => {
         expect(postExampleRes.status).toEqual(200);
         expect(postExampleRes.body.name).toEqual('test');
     });
-
-    it('post /example 400', async () => {
-        const exampleData = {
-            na: 'test',
-            des: 'test',
-        };
-        const postExampleWrongRes = await requestWithSupertest.post('/example').send(exampleData).set('Accept', 'application/json');
-        expect(postExampleWrongRes.status).toEqual(400);
-    });
-
 
     it('get /example 200', async () => {
         const example = postExampleRes.body;

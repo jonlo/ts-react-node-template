@@ -4,7 +4,6 @@ import { CrudController } from '../src/controllers/crudController';
 import { ExamplesRepository } from '../src/db/mongodb/repositories/examplesRepository';
 import { Example } from '../src/models/example/example';
 
-
 beforeAll(async () => await dbHandler.connect());
 afterEach(async () => await dbHandler.clearDatabase());
 afterAll(async () => await dbHandler.closeDatabase());
@@ -19,7 +18,6 @@ describe('Examples controller', () => {
     };
     const example = await examplesController.create(exampleData);
     expect(example?.name).toEqual('test');
-
   });
 
   it('Add example wrong data', async () => {
