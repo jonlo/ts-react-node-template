@@ -13,46 +13,79 @@ describe('Examples controller', () => {
 
   it('Add example', async () => {
     const examplesController = new CrudController(new ExamplesRepository());
-    const example: Example = {
+    const exampleData: Example = {
       name: 'test',
       description: 'test',
     };
-    const exampleDb = await examplesController.create(example);
-    expect(exampleDb?.name).toEqual('test');
+    const example = await examplesController.create(exampleData);
+    expect(example?.name).toEqual('test');
 
+  });
+
+  it('Add example wrong data', async () => {
+    const examplesController = new CrudController(new ExamplesRepository());
+    const exampleData: Example = {
+      name: 'test',
+      description: 'test',
+    };
+    const example = await examplesController.create(exampleData);
+    expect(example?.name).toEqual('test');
+
+  });
+
+  it('Get example by id', async () => {
+    const examplesController = new CrudController(new ExamplesRepository());
+    const example1Data: Example = {
+      name: 'test',
+      description: 'test',
+    };
+    const example = await examplesController.create(example1Data);
+    const exampleById = await examplesController.getById(example?.dbId as string);
+    expect(exampleById).not.toEqual(null);
+  });
+
+  it('Get example by id wrong id', async () => {
+    const examplesController = new CrudController(new ExamplesRepository());
+    const example1Data: Example = {
+      name: 'test',
+      description: 'test',
+    };
+    await examplesController.create(example1Data);
+    const exampleById = await examplesController.getById("notRealId");
+    expect(exampleById).toEqual(null);
   });
 
   it('Get examples', async () => {
     const examplesController = new CrudController(new ExamplesRepository());
-    const example1: Example = {
+    const example1Data: Example = {
       name: 'test',
       description: 'test',
     };
-    const example2: Example = {
+    const example2Data: Example = {
       name: 'test2',
       description: 'test',
     };
-    await examplesController.create(example1);
-    await examplesController.create(example2);
+    await examplesController.create(example1Data);
+    await examplesController.create(example2Data);
     const examples = await examplesController.getAll();
-    expect(examples.length).toEqual(2);
+    expect(examples?.length).toEqual(2);
   });
 
   it('Delete example', async () => {
     const examplesController = new CrudController(new ExamplesRepository());
-    const example1: Example = {
+    const example1Data: Example = {
       name: 'test',
       description: 'test',
     }
-    const example2: Example = {
+    const example2Data: Example = {
       name: 'test2',
       description: 'test',
     }
-    const exampleDB = await examplesController.create(example1);
-    await examplesController.create(example2);
+    const exampleDB = await examplesController.create(example1Data);
+    await examplesController.create(example2Data);
     await examplesController.delete(exampleDB?.dbId as string);
     const examples = await examplesController.getAll();
-    expect(examples.length).toEqual(1);
+    expect(examples?.length).toEqual(1);
   });
 });
 

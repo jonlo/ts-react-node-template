@@ -8,13 +8,13 @@ const error = Debug("Example:error");
 
 export class ExamplesRepository implements IRepository<Example> {
 
-	async getAll(filter: Object): Promise<Example[]> {
+	async getAll(filter: Object): Promise<Example[] | null> {
 		try {
 			const models = await ExampleModel.find(filter);
 			return models;
 		} catch (err) {
 			error(err);
-			return [];
+			return null;
 		}
 	}
 

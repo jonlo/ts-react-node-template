@@ -10,12 +10,12 @@ export class CrudController<T> {
     }
 
     async getAll(filter?: Object) {
-        debug('get All');
+        debug('get All ');
         return await this.repository.getAll(filter);
     }
 
     async getById(id: string) {
-        debug('get example By Id ' + id);
+        debug('get By Id ' + id);
         return await this.repository.getById(id);
     }
 

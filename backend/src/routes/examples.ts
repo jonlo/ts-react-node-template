@@ -1,4 +1,3 @@
-
 import express, { Request, Response } from 'express';
 import Debug from "debug";
 import { CrudController } from '../controllers/crudController';
@@ -13,6 +12,12 @@ const examplesController = new CrudController(new ExamplesRepository());
 examples.get('/examples', async (req: Request, res: Response) => {
     try {
         const examples = await examplesController.getAll();
+        if (!examples) {
+            error('Get examples failed');
+            res.status(400).send();
+            return;
+        }
+        debug('Get examples');
         res.status(200).send(examples);
     } catch (err) {
         error(err);
@@ -23,7 +28,12 @@ examples.get('/examples', async (req: Request, res: Response) => {
 examples.post('/example', async (req: Request, res: Response) => {
     try {
         const example = await examplesController.create(req.body);
-        debug('⚡️ Post example');
+        if (!example) {
+            error('Post example failed');
+            res.status(400).send();
+            return;
+        }
+        debug('Post example');
         res.status(200).send(example);
     } catch (err) {
         error(err);
@@ -34,6 +44,12 @@ examples.post('/example', async (req: Request, res: Response) => {
 examples.get('/example', async (req: Request, res: Response) => {
     try {
         const example = await examplesController.getById(req.query.id as string);
+        if (!example) {
+            debug('Example not found');
+            res.status(404).send();
+            return;
+        }
+        debug('Get example');
         res.status(200).send(example);
     } catch (err) {
         error(err);
@@ -44,6 +60,12 @@ examples.get('/example', async (req: Request, res: Response) => {
 examples.put('/example', async (req: Request, res: Response) => {
     try {
         const example = await examplesController.update(req.body);
+        if (!example) {
+            debug('Update example failed');
+            res.status(400).send();
+            return;
+        }
+        debug('Update example');
         res.status(200).send(example);
     } catch (err) {
         error(err);
@@ -54,6 +76,12 @@ examples.put('/example', async (req: Request, res: Response) => {
 examples.delete('/example', async (req: Request, res: Response) => {
     try {
         const example = await examplesController.delete(req.query.id as string);
+        if (!example) {
+            debug('Delete example failed');
+            res.status(400).send();
+            return;
+        }
+        debug('Delete example');
         res.status(200).send(example);
     } catch (err) {
         error(err);
