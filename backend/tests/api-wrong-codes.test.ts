@@ -29,4 +29,33 @@ describe('API wrong http codes', () => {
         const postExampleWrongRes = await requestWithSupertest.post('/example').send(exampleData).set('Accept', 'application/json');
         expect(postExampleWrongRes.status).toEqual(400);
     });
+
+    it('post /example 400', async () => {
+        const exampleData = {
+            name: 'test',
+            description: 'test',
+            notAField: 'test',
+        };
+        const postExampleWrongRes = await requestWithSupertest.post('/example').send(exampleData).set('Accept', 'application/json');
+        expect(postExampleWrongRes.status).toEqual(400);
+    });
+
+
+    it('get /example 400', async () => {
+        const example = postExampleRes.body;
+        const getExampleRes = await requestWithSupertest.get('/example').query({ i: example.dbId }).set('Accept', 'application/json');
+        expect(getExampleRes.status).toEqual(400);
+    });
+
+    it('get /example 400', async () => {
+        const getExampleRes = await requestWithSupertest.get('/example').set('Accept', 'application/json');
+        expect(getExampleRes.status).toEqual(400);
+    });
+    
+    it('update /example 400', async () => {
+        const example = postExampleRes.body;
+        example.descrip = 'test2';
+        const putExampleRes = await requestWithSupertest.put('/example').send(example).set('Accept', 'application/json');
+        expect(putExampleRes.status).toEqual(400);
+    });
 });

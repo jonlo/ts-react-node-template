@@ -2,6 +2,8 @@ import express, { Request, Response } from 'express';
 import Debug from "debug";
 import { CrudController } from '../controllers/crudController';
 import { ExamplesRepository } from '../db/mongodb/repositories/examplesRepository';
+import { validate } from '../middlewares/validator';
+import { createRules, updateRules, getRules, deleteRules } from '../middlewares/exampleRules';
 
 const debug = Debug("Example:examples");
 const error = Debug("Example:error");
@@ -25,7 +27,7 @@ examples.get('/examples', async (req: Request, res: Response) => {
     }
 });
 
-examples.post('/example', async (req: Request, res: Response) => {
+examples.post('/example', createRules(), validate, async (req: Request, res: Response) => {
     try {
         const example = await examplesController.create(req.body);
         if (!example) {
@@ -41,7 +43,7 @@ examples.post('/example', async (req: Request, res: Response) => {
     }
 });
 
-examples.get('/example', async (req: Request, res: Response) => {
+examples.get('/example', getRules(), validate, async (req: Request, res: Response) => {
     try {
         const example = await examplesController.getById(req.query.id as string);
         if (!example) {
@@ -57,7 +59,7 @@ examples.get('/example', async (req: Request, res: Response) => {
     }
 });
 
-examples.put('/example', async (req: Request, res: Response) => {
+examples.put('/example', updateRules(), validate, async (req: Request, res: Response) => {
     try {
         const example = await examplesController.update(req.body);
         if (!example) {
@@ -73,7 +75,7 @@ examples.put('/example', async (req: Request, res: Response) => {
     }
 });
 
-examples.delete('/example', async (req: Request, res: Response) => {
+examples.delete('/example', deleteRules(), validate, async (req: Request, res: Response) => {
     try {
         const example = await examplesController.delete(req.query.id as string);
         if (!example) {
