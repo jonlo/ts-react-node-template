@@ -58,4 +58,14 @@ describe('API wrong http codes', () => {
         const putExampleRes = await requestWithSupertest.put('/example').send(example).set('Accept', 'application/json');
         expect(putExampleRes.status).toEqual(400);
     });
+
+    it('update no idDB /example 400', async () => {
+        const example = postExampleRes.body;
+        const example2: Example = {
+            name: example.name,
+            description: 'test2',
+        };
+        const putExampleRes = await requestWithSupertest.put('/example').send(example2).set('Accept', 'application/json');
+        expect(putExampleRes.status).toEqual(400);
+    });
 });

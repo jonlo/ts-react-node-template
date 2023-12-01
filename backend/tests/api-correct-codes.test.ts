@@ -46,6 +46,37 @@ describe('API correct http codes', () => {
         expect(putExampleRes.body.description).toEqual('test2');
     });
 
+    it('update /example only dbId 200', async () => {
+        const example = postExampleRes.body;
+        const example2: Example = {
+            dbId: example.dbId,
+        };
+        const putExampleRes = await requestWithSupertest.put('/example').send(example2).set('Accept', 'application/json');
+        expect(putExampleRes.status).toEqual(200);
+    });
+
+    it('update /example only description 200', async () => {
+        const example = postExampleRes.body;
+        const example2: Example = {
+            dbId: example.dbId,
+            description: 'test2',
+        };
+        const putExampleRes = await requestWithSupertest.put('/example').send(example2).set('Accept', 'application/json');
+        expect(putExampleRes.status).toEqual(200);
+        expect(putExampleRes.body.description).toEqual('test2');
+    });
+
+    it('update /example only name 200', async () => {
+        const example = postExampleRes.body;
+        const example2: Example = {
+            dbId: example.dbId,
+            name: 'test2',
+        };
+        const putExampleRes = await requestWithSupertest.put('/example').send(example2).set('Accept', 'application/json');
+        expect(putExampleRes.status).toEqual(200);
+        expect(putExampleRes.body.name).toEqual('test2');
+    });
+
     it('delete /example 200', async () => {
         const example = postExampleRes.body;
         const deleteExampleRes = await requestWithSupertest.delete('/example').query({ id: example.dbId }).set('Accept', 'application/json');

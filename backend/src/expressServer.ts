@@ -10,7 +10,7 @@ const morgan = require('morgan');
 
 export class ExpressServer {
 	public app: Application;
-	private server?: Server;
+	private server: Server;
 
 	constructor(app: Application, port: string) {
 		morgan.token('id', function getId(req: any) {
@@ -33,10 +33,10 @@ export class ExpressServer {
 	}
 
 	close() {
-		this.server?.close();
+		this.server.close();
 	}
 
-	getServer(): Server | undefined {
+	getServer(): Server {
 		return this.server;
 	}
 }
