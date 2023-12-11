@@ -29,6 +29,7 @@ export class ExpressServer {
 
 		this.server = this.app.listen(port, () => {
 			debug('⚡️ Backend running at port %d', port);
+			debug('environment: %s', process.env.NODE_ENV);
 		});
 	}
 

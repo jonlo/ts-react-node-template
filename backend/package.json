@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test vitest",
-    "start": "node dist/src/index.js",
+    "start": "NODE_ENV=production node dist/src/index.js",
     "pm2": "tsc && pm2 start pm2.config.js --env production",
     "pm2stop":"pm2 stop pm2.config.js",
     "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/index.js\"",
